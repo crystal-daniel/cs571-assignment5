@@ -4,10 +4,19 @@ data Expr = Plus Expr Expr | Minus Expr Expr | Times Expr Expr | Div Expr Expr
     | Literal Float
 
 eval :: Expr -> Float
--- Your code goes here
+eval (Literal x) = x
+eval (Plus e1 e2) = eval e1 + eval e2
+eval (Minus e1 e2) = eval e1 - eval e2
+eval (Times e1 e2) = eval e1 * eval e2
+eval (Div e1 e2) = eval e1 / eval e2
 
 eq :: Expr -> Expr -> Bool
--- Your code goes here
+eq (Literal x) (Literal y) = x == y
+eq (Plus e1 e2) (Plus e3 e4) = eq e1 e3 && eq e2 e4
+eq (Minus e1 e2) (Minus e3 e4) = eq e1 e3 && eq e2 e4
+eq (Times e1 e2) (Times e3 e4) = eq e1 e3 && eq e2 e4
+eq (Div e1 e2) (Div e3 e4) = eq e1 e3 && eq e2 e4
+eq _ _ = False
 
 -- Should eval to "5.0"
 test1 = Plus (Literal 3.0) (Literal 2.0)
